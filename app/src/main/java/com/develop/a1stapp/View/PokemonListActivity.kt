@@ -18,12 +18,19 @@ import retrofit2.Response
 
 class PokemonListActivity : AppCompatActivity() {
 
+    private lateinit var pokemonListVM: PokemonListViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView.layoutManager = LinearLayoutManager(this)
-
+        pokemonListVM = PokemonListViewModel()
         fetchData()
+        getPokemonList()
+    }
+
+    private fun getPokemonList() {
+        pokemonListVM.getPokemonList()
     }
 
     private fun fetchData() {
