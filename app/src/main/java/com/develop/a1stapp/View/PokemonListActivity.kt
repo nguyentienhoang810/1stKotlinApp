@@ -25,35 +25,15 @@ class PokemonListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         recyclerView.layoutManager = LinearLayoutManager(this)
         pokemonListVM = PokemonListViewModel()
-        fetchData()
         getPokemonList()
     }
 
     private fun getPokemonList() {
-        pokemonListVM.getPokemonList()
-    }
-
-    private fun fetchData() {
-        val pokemonService = ServiceBuilder.build(PokemonService::class.java)
-        val requestCall = pokemonService.getPokemonList()
-
-        requestCall.enqueue(object : Callback<Pokemon> {
-            override fun onResponse(call: Call<Pokemon>, response: Response<Pokemon>) {
-                println("status code ${response.code()}")
-                if (response.isSuccessful) { //status code in range of 200 ~ 299
-                    val respondedPokemon = response.body()!!
-                    val pokemonResults = respondedPokemon.results
-                    updateUI(pokemonResults!!)
-                } else { //status code in range of 300s, 400s, 500s
-                    Toast.makeText(this@PokemonListActivity, "failed to get item", Toast.LENGTH_LONG).show()
-                }
+        pokemonListVM.getPokemonList { success ->
+            if (success) {
+                updateUI(pokemonListVM.pokemonList!!)
             }
-
-            //handle error
-            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
-                Toast.makeText(this@PokemonListActivity, "fetch failed" + t.toString(), Toast.LENGTH_LONG).show()
-            }
-        })
+        }
     }
 
     private fun getPokemonDetail(id: Int) {

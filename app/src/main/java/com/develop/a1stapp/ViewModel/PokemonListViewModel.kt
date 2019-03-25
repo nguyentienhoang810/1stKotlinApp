@@ -1,8 +1,8 @@
 package com.develop.a1stapp.ViewModel
 
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.develop.a1stapp.Model.Pokemon
+import com.develop.a1stapp.Model.PokemonResult
 import com.develop.a1stapp.Service.PokemonService
 import com.develop.a1stapp.Service.ServiceBuilder
 import retrofit2.Call
@@ -13,16 +13,19 @@ class PokemonListViewModel: ViewModel() {
     //this flag should be observer to add or remove loading animation
     var isLoading: Boolean = true
     val pokemonService = ServiceBuilder.build(PokemonService::class.java)
-    lateinit var pokemonList: Pokemon
+    var pokemonList: List<PokemonResult>? = null
 
-    fun getPokemonList() {
+    fun getPokemonList(callback:(Boolean) -> Unit) {
         val requestCall = pokemonService.getPokemonList()
         handleCallback(requestCall) { pokemon: Pokemon?, success ->
+            isLoading = false
             if (success) {
                 println("fetch done $pokemon")
-                pokemonList = pokemon!!
+                pokemonList = pokemon!!.results
+                callback(true)
             } else {
                 println("fetch failed")
+                callback(false)
             }
         }
     }
