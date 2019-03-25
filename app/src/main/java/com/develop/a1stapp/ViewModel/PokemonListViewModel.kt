@@ -49,4 +49,6 @@ class PokemonListViewModel: ViewModel() {
             }
         })
     }
+
+    //TO DO: need handle error in another class (Service)
 }

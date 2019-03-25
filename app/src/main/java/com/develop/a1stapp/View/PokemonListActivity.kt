@@ -8,6 +8,7 @@ import com.develop.a1stapp.Model.Pokemon
 import com.develop.a1stapp.Model.PokemonDetail
 import com.develop.a1stapp.Model.PokemonResult
 import com.develop.a1stapp.R
+import com.develop.a1stapp.Resource.LoadingView
 import com.develop.a1stapp.Service.PokemonService
 import com.develop.a1stapp.Service.ServiceBuilder
 import com.develop.a1stapp.ViewModel.PokemonListViewModel
@@ -19,18 +20,26 @@ import retrofit2.Response
 class PokemonListActivity : AppCompatActivity() {
 
     private lateinit var pokemonListVM: PokemonListViewModel
+    private lateinit var loadingView: LoadingView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView.layoutManager = LinearLayoutManager(this)
         pokemonListVM = PokemonListViewModel()
+        configLoadingView()
         getPokemonList()
     }
 
+    private fun configLoadingView() {
+        loadingView = LoadingView(this)
+    }
+
     private fun getPokemonList() {
+        loadingView.show()
         pokemonListVM.getPokemonList { success ->
             if (success) {
+                loadingView.close()
                 updateUI(pokemonListVM.pokemonList!!)
             }
         }
