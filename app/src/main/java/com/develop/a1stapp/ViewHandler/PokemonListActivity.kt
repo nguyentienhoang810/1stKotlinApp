@@ -1,10 +1,9 @@
-package com.develop.a1stapp.View
+package com.develop.a1stapp.ViewHandler
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.widget.Toast
-import com.develop.a1stapp.Model.Pokemon
+import com.develop.a1stapp.Base.BaseActivity
 import com.develop.a1stapp.Model.PokemonDetail
 import com.develop.a1stapp.Model.PokemonResult
 import com.develop.a1stapp.R
@@ -17,29 +16,24 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PokemonListActivity : AppCompatActivity() {
+class PokemonListActivity : BaseActivity() {
 
     private lateinit var pokemonListVM: PokemonListViewModel
-    private lateinit var loadingView: LoadingView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView.layoutManager = LinearLayoutManager(this)
         pokemonListVM = PokemonListViewModel()
-        configLoadingView()
         getPokemonList()
     }
 
-    private fun configLoadingView() {
-        loadingView = LoadingView(this)
-    }
 
     private fun getPokemonList() {
-        loadingView.show()
+        showLoadingView()
         pokemonListVM.getPokemonList { success ->
             if (success) {
-                loadingView.close()
+                dismissLoadingView()
                 updateUI(pokemonListVM.pokemonList!!)
             }
         }

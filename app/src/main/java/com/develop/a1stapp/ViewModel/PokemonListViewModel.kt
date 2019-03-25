@@ -12,7 +12,7 @@ import retrofit2.Response
 class PokemonListViewModel: ViewModel() {
     //this flag should be observer to add or remove loading animation
     var isLoading: Boolean = true
-    val pokemonService = ServiceBuilder.build(PokemonService::class.java)
+    private val pokemonService = ServiceBuilder.build(PokemonService::class.java)
     var pokemonList: List<PokemonResult>? = null
 
     fun getPokemonList(callback:(Boolean) -> Unit) {

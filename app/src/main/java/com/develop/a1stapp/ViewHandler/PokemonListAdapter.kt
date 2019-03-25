@@ -1,4 +1,4 @@
-package com.develop.a1stapp.View
+package com.develop.a1stapp.ViewHandler
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
