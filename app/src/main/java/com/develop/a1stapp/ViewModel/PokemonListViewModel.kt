@@ -30,7 +30,7 @@ class PokemonListViewModel: ViewModel() {
         }
     }
 
-    //TO DO: handle call back or request should be in another Class (service)
+    //TODO: handle call back or request should be in another Class (service)
     private fun<T> handleCallback(request: Call<T>, callback:(T?, Boolean)->Unit) {
         request.enqueue(object : Callback<T> {
             override fun onResponse(call: Call<T>, response: Response<T>) {
@@ -50,5 +50,5 @@ class PokemonListViewModel: ViewModel() {
         })
     }
 
-    //TO DO: need handle error in another class (Service)
+    //TODO: need handle error in another class (Service)
 }

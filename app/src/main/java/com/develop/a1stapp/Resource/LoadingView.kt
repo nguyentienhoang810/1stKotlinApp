@@ -6,6 +6,7 @@ import android.view.Window
 import com.develop.a1stapp.R
 import kotlinx.android.synthetic.main.loading_view.view.*
 
+//TODO: create base Activity for reusable item like loadingView
 class LoadingView(private val activity: Activity) {
     var dialog: Dialog? = null
 
